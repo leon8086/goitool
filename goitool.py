@@ -41,7 +41,7 @@ def Save( ):
     dlg.geometry(geo)
     dlg.filename=""
     dlg.resizable(width=False,height=False)
-    name = Entry(dlg,width=35)
+    name = Entry(dlg, font=(u"Arial",12), width=28)
     name.grid(row=0)
     def Close():
         filename = name.get()
@@ -50,7 +50,7 @@ def Save( ):
             filename=filename+".dat"
             SaveKey(open(filename,"w"))
             UpdateList(listb)
-    btn = Button(dlg,text=u"(&O)K", font=(u"Arial",12),command=lambda:Close())
+    btn = Button(dlg,text=u"OK", font=(u"Arial",12),command=lambda:Close())
     btn.grid(row=1)
     root.wait_window(dlg)
 
@@ -76,9 +76,9 @@ listb = Listbox(root,font=(u"Arial",12),width=35)
 UpdateList(listb)
 
 listb.grid( row=0, column=0, columnspan=2)
-b_save = Button( root, text=u"(&S)ave", font=(u"Arial",12), width=10, command=Save )
+b_save = Button( root, text=u"Save", font=(u"Arial",12), width=10, command=Save )
 b_save.grid( row=1, column=0 )
-b_load = Button( root, text=u"(&L)oad", font=(u"Arial",12), width=10, command=Load )
+b_load = Button( root, text=u"Load", font=(u"Arial",12), width=10, command=Load )
 b_load.grid( row=1, column=1 )
 root.title("Get Over It Save/Load")
 width = root.winfo_vrootwidth()+root.winfo_vrootx()
