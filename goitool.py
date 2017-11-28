@@ -4,6 +4,7 @@
 import _winreg
 import os,re,sys
 from Tkinter import *
+from tkSimpleDialog  import *
 
 def BinaryEncode( s ):
     ret = ""
@@ -34,25 +35,11 @@ def LoadKey(out):
     _winreg.SetValueEx(key,"SaveGame1_h1867918427",0,_winreg.REG_BINARY,BinaryDecode(values[2]))
 
 def Save( ):
-    dlg = Toplevel(root)
-    dlg.title("Save Name")
-    rwid, rhei = root.winfo_x(), root.winfo_y()
-    geo = "250x60+%d+%d"%(rwid+25,rhei+120)
-    dlg.geometry(geo)
-    dlg.filename=""
-    dlg.resizable(width=False,height=False)
-    name = Entry(dlg, font=(u"Arial",12), width=28)
-    name.grid(row=0)
-    def Close():
-        filename = name.get()
-        dlg.destroy()
-        if filename != "":
-            filename=filename+".dat"
-            SaveKey(open(filename,"w"))
-            UpdateList(listb)
-    btn = Button(dlg,text=u"OK", font=(u"Arial",12),command=lambda:Close())
-    btn.grid(row=1)
-    root.wait_window(dlg)
+    filename = askstring("Save Name","Save Name")
+    if filename != "":
+        filename=filename+".dat"
+        SaveKey(open(filename,"w"))
+        UpdateList(listb)
 
 def Load():
     index = listb.curselection()
@@ -70,8 +57,15 @@ def UpdateList( lb ):
         filename = filename[:-4]
         lb.insert(0,filename)
 
+def Key(event):
+    if event.keycode == ord("S"):
+        Save()
+    elif event.keycode == ord("L"):
+        Load()
+
 root = Tk()
 
+root.bind("<KeyRelease>", Key)
 listb = Listbox(root,font=(u"Arial",12),width=35)
 UpdateList(listb)
 
@@ -79,6 +73,7 @@ listb.grid( row=0, column=0, columnspan=2)
 b_save = Button( root, text=u"Save", font=(u"Arial",12), width=10, command=Save )
 b_save.grid( row=1, column=0 )
 b_load = Button( root, text=u"Load", font=(u"Arial",12), width=10, command=Load )
+b_save.grid( row=1, column=0 )
 b_load.grid( row=1, column=1 )
 root.title("Get Over It Save/Load")
 width = root.winfo_vrootwidth()+root.winfo_vrootx()
