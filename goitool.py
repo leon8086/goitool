@@ -19,7 +19,8 @@ def BinaryDecode(s):
     return ret
 
 def SaveKey(out):
-    key = _winreg.OpenKey( _winreg.HKEY_CURRENT_USER,r"Software\Bennett Foddy\Getting Over It")
+    key = _winreg.OpenKey( _winreg.HKEY_CURRENT_USER,
+            r"Software\Bennett Foddy\Getting Over It")
     v, t = _winreg.QueryValueEx(key,"NumSaves_h765021473")
     out.write("%d\n"%v)
     v, t = _winreg.QueryValueEx(key,"SaveGame0_h1867918426")
@@ -29,10 +30,14 @@ def SaveKey(out):
 
 def LoadKey(out):
     values = out.read().split("\n")
-    key = _winreg.OpenKey( _winreg.HKEY_CURRENT_USER,r"Software\Bennett Foddy\Getting Over It",0,_winreg.KEY_SET_VALUE)
-    _winreg.SetValueEx(key,"NumSaves_h765021473",0,_winreg.REG_DWORD,int(values[0]))
-    _winreg.SetValueEx(key,"SaveGame0_h1867918426",0,_winreg.REG_BINARY,BinaryDecode(values[1]))
-    _winreg.SetValueEx(key,"SaveGame1_h1867918427",0,_winreg.REG_BINARY,BinaryDecode(values[2]))
+    key = _winreg.OpenKey( _winreg.HKEY_CURRENT_USER,
+            r"Software\Bennett Foddy\Getting Over It",0,_winreg.KEY_SET_VALUE)
+    _winreg.SetValueEx(key,"NumSaves_h765021473",0,
+            _winreg.REG_DWORD,int(values[0]))
+    _winreg.SetValueEx(key,"SaveGame0_h1867918426",0,
+            _winreg.REG_BINARY,BinaryDecode(values[1]))
+    _winreg.SetValueEx(key,"SaveGame1_h1867918427",0,
+            _winreg.REG_BINARY,BinaryDecode(values[2]))
 
 def Save( ):
     filename = askstring("Save Name","Save Name")
@@ -70,9 +75,11 @@ listb = Listbox(root,font=(u"Arial",12),width=35)
 UpdateList(listb)
 
 listb.grid( row=0, column=0, columnspan=2)
-b_save = Button( root, text=u"Save", font=(u"Arial",12), width=10, command=Save )
+b_save = Button( root, text=u"Save", font=(u"Arial",12),
+        width=10, command=Save )
 b_save.grid( row=1, column=0 )
-b_load = Button( root, text=u"Load", font=(u"Arial",12), width=10, command=Load )
+b_load = Button( root, text=u"Load", font=(u"Arial",12),
+        width=10, command=Load )
 b_save.grid( row=1, column=0 )
 b_load.grid( row=1, column=1 )
 root.title("Get Over It Save/Load")
